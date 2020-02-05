@@ -11,7 +11,7 @@ class Api {
     this.userId = uuid.v4();
   }
 
-  buildKeys() {
+  async buildKeys() {
     const UNIX_TIMESTAMP = Math.floor(Date.now() / 1000);
     const XApiKey = `${CSML_API_CLIENT_KEY}|${UNIX_TIMESTAMP}`;
     const signature = crypto.createHmac('sha256', CSML_API_SECRET_KEY)
@@ -21,8 +21,8 @@ class Api {
     return { XApiKey, XApiSignature }
   }
 
-  getConv(input) {
-    const { XApiKey, XApiSignature } = this.buildKeys();
+  async getConv(input) {
+    const { XApiKey, XApiSignature } = await this.buildKeys();
     return axios({
       method: 'post',
       url: 'https://clients.csml.dev/prod/api/chat',
@@ -48,10 +48,11 @@ class Api {
         }
     })
       .then(response => {
-        console.log('response', response.data);
+        return response.data
       })
       .catch(error => {
-        console.log('error', error.response);
+        console.log("IMPOSSIBLE TO CONNECT TO CSML STUDIO");
+        throw console.error(error);
       });
   }
 };
