@@ -1,16 +1,24 @@
 {
-  "name": "cli-client",
-  "version": "1.0.0",
-  "description": "",
+  "name": "csml-client-cli",
+  "version": "0.0.1-beta1",
+  "description": "Interact with a CSML chatbot in your terminal!",
   "main": "main.js",
+  "bin": {
+    "csml-client": "main.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "CSML.dev <contact@csml.dev>",
   "license": "ISC",
   "dependencies": {
+    "asciify-image": "^0.1.5",
     "axios": "^0.19.2",
+    "commander": "^4.1.1",
     "dotenv": "^8.2.0",
     "uuid": "^3.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0"
   }
 }

@@ -1,17 +1,18 @@
 const axios = require('axios');
-const uuid = require('uuid');
 const crypto = require('crypto');
-require('dotenv').config()
+const uuidv4 = require('uuid/v4');
 
-const { CSML_API_CLIENT_KEY, CSML_API_SECRET_KEY } = process.env;
 
 class Api {
 
-  constructor() {
-    this.userId = uuid.v4();
+  constructor(CSML_API_CLIENT_KEY, CSML_API_SECRET_KEY) {
+    this.CSML_API_CLIENT_KEY = CSML_API_CLIENT_KEY;
+    this.CSML_API_SECRET_KEY = CSML_API_SECRET_KEY;
+    this.userId = uuidv4();
   }
 
-  async buildKeys() {
+  buildKeys() {
+    const { CSML_API_CLIENT_KEY, CSML_API_SECRET_KEY } = this;
     const UNIX_TIMESTAMP = Math.floor(Date.now() / 1000);
     const XApiKey = `${CSML_API_CLIENT_KEY}|${UNIX_TIMESTAMP}`;
     const signature = crypto.createHmac('sha256', CSML_API_SECRET_KEY)
@@ -22,7 +23,7 @@ class Api {
   }
 
   async getConv(input) {
-    const { XApiKey, XApiSignature } = await this.buildKeys();
+    const { XApiKey, XApiSignature } = this.buildKeys();
     return axios({
       method: 'post',
       url: 'https://clients.csml.dev/prod/api/chat',
@@ -34,11 +35,8 @@ class Api {
           client: {
             user_id: this.userId
           },
-          metadata: {
-            firstname: "Bastien",
-            lastname: "Botecli"
-          },
-          request_id: "yaryayryyar",
+          metadata: {},
+          request_id: uuidv4(),
           payload: {
             content: {
               text: input

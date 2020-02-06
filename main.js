@@ -1,15 +1,31 @@
-const { Api } = require('./api')
-const cli = require('./cli')
+#!/usr/bin/env node
 
-const initialInput = process.argv[1] || "Hello";
-const api = new Api();
+require('dotenv').config();
+const path = require('path');
+const commander = require('commander');
+const asciify = require('asciify-image');
+const cli = require('./cli')
+const { Api } = require('./api')
+
+const program = new commander.Command();
+
+program
+  .version('0.0.1')
+  .option('-d, --debug', 'output extra debugging')
+  .option('-k, --key <value>', 'CSML studio API key', process.env.CSML_API_CLIENT_KEY)
+  .option('-s, --secret <value>', 'CSML studio API secret', process.env.CSML_API_SECRET_KEY);
+
+program.parse(process.argv);
+
+if (program.debug) console.log(program.opts());
+
+const api = new Api(program.key, program.secret);
 
 let inputChoices = [];
 
-const continueConv = async input => {
+const continueConv = async (input) => {
   const conv = await api.getConv(input)
   conv.messages.forEach(message => {
-    // console.log('inputChoices', inputChoices);
     inputChoices = cli.displayMessage(message, inputChoices);
   });
   if (conv.conversation_end) return
@@ -20,6 +36,20 @@ const continueConv = async input => {
   return continueConv(userInput);
 };
 
-// (async () => {
-  return continueConv(initialInput);
-// })();
+(async () => {
+
+  const logo = path.join(__dirname, 'images/logo.png');
+
+  const options = {
+    fit:    'box',
+    width:  30,
+    height: 30
+  }
+
+  const resp = await asciify(logo, options);
+  console.log(resp);
+
+  const initialInput = await cli.askQuestion();
+  continueConv(initialInput);
+})();
+
