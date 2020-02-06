@@ -14,6 +14,7 @@
   "dependencies": {
     "asciify-image": "^0.1.5",
     "axios": "^0.19.2",
+    "bluebird": "^3.7.2",
     "commander": "^4.1.1",
     "dotenv": "^8.2.0",
     "uuid": "^3.4.0"

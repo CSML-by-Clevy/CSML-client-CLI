@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 require('dotenv').config();
+global.Promise = require('bluebird');
+
 const path = require('path');
 const commander = require('commander');
 const asciify = require('asciify-image');

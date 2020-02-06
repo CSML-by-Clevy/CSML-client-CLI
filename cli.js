@@ -12,7 +12,7 @@ const askQuestion = async () => {
   }))
 };
 
-const displayMessage = (message, inputChoices) => {
+async function displayMessage(message, inputChoices) {
   if (message.direction !== 'SEND' || !message.payload) return
 
   if (message.payload.content_type === 'typing')
@@ -28,7 +28,7 @@ const displayMessage = (message, inputChoices) => {
     console.log(`🤖  [Url ${message.payload.content.url}]`)
   }
   else if (message.payload.content_type === 'image') {
-    console.log(`🤖  [Image ${message.payload.content.url}]`)
+    await displayImage(message.payload.content.url)
   }
 
   else if (message.payload.content_type === 'button') {
@@ -43,7 +43,7 @@ const displayMessage = (message, inputChoices) => {
     });
   }
 
-  return inputChoices
+  return inputChoices;
 };
 
 module.exports = { displayMessage, askQuestion };
