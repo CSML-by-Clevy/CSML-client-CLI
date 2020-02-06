@@ -32,7 +32,9 @@ const continueConv = async (input) => {
   conv.messages.forEach(message => {
     inputChoices = cli.displayMessage(message, inputChoices);
   });
-  if (conv.conversation_end) return
+  if (conv.conversation_end) {
+    console.log("--- End of conversation ---");
+  }
   let userInput = await cli.askQuestion();
   if (userInput && !isNaN(parseInt(userInput)) && parseInt(userInput) <= inputChoices.length)
     userInput = inputChoices[userInput - 1].title;
@@ -52,6 +54,8 @@ const continueConv = async (input) => {
 
   const resp = await asciify(logo, options);
   console.log(resp);
+  console.log("--- Starting conversation with CSML bot ---");
+  console.log("press ctrl+C to exit");
 
   const initialInput = await cli.askQuestion();
   continueConv(initialInput);
