@@ -29,8 +29,8 @@ let inputChoices = [];
 
 const continueConv = async (input) => {
   const conv = await api.getConv(input)
-  conv.messages.forEach(message => {
-    inputChoices = cli.displayMessage(message, inputChoices);
+  await Promise.each(conv.messages, async message => {
+    inputChoices = await cli.displayMessage(message, inputChoices);
   });
   if (conv.conversation_end) {
     console.log("--- End of conversation ---");
