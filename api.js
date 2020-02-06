@@ -5,10 +5,10 @@ const uuidv4 = require('uuid/v4');
 
 class Api {
 
-  constructor(CSML_API_CLIENT_KEY, CSML_API_SECRET_KEY) {
-    this.CSML_API_CLIENT_KEY = CSML_API_CLIENT_KEY;
-    this.CSML_API_SECRET_KEY = CSML_API_SECRET_KEY;
-    this.userId = uuidv4();
+  constructor(key, secret, user) {
+    this.CSML_API_CLIENT_KEY = key;
+    this.CSML_API_SECRET_KEY = secret;
+    this.CSML_USER_ID = user;
   }
 
   buildKeys() {
@@ -33,7 +33,7 @@ class Api {
       },
       data: {
           client: {
-            user_id: this.userId
+            user_id: this.CSML_USER_ID
           },
           metadata: {},
           request_id: uuidv4(),

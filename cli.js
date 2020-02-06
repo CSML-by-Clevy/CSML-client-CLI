@@ -1,6 +1,7 @@
 const readline = require('readline');
 
-const askQuestion = async () => {
+async function askQuestion() {
+  console.log();
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,

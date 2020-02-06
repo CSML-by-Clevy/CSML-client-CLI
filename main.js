@@ -4,6 +4,7 @@ require('dotenv').config();
 global.Promise = require('bluebird');
 
 const path = require('path');
+const uuidv4 = require('uuid/v4');
 const commander = require('commander');
 const asciify = require('asciify-image');
 const cli = require('./cli')
@@ -15,13 +16,14 @@ program
   .version('0.0.1')
   .option('-d, --debug', 'output extra debugging')
   .option('-k, --key <value>', 'CSML studio API key', process.env.CSML_API_CLIENT_KEY)
-  .option('-s, --secret <value>', 'CSML studio API secret', process.env.CSML_API_SECRET_KEY);
+  .option('-s, --secret <value>', 'CSML studio API secret', process.env.CSML_API_SECRET_KEY)
+  .option('-u, --user <value>', 'unique user id', process.env.CSML_USER_ID || uuidv4());
 
 program.parse(process.argv);
 
 if (program.debug) console.log(program.opts());
 
-const api = new Api(program.key, program.secret);
+const api = new Api(program.key, program.secret, program.user);
 
 let inputChoices = [];
 
