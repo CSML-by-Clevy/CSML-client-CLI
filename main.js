@@ -9,6 +9,7 @@ const commander = require('commander');
 const asciify = require('asciify-image');
 const cli = require('./cli')
 const { Api } = require('./api')
+const { displayImage } = require('./helpers');
 
 const program = new commander.Command();
 
@@ -43,17 +44,8 @@ const continueConv = async (input) => {
 };
 
 (async () => {
+  await displayImage(path.join(__dirname, 'images/logo.png'));
 
-  const logo = path.join(__dirname, 'images/logo.png');
-
-  const options = {
-    fit:    'box',
-    width:  30,
-    height: 30
-  }
-
-  const resp = await asciify(logo, options);
-  console.log(resp);
   console.log("--- Starting conversation with CSML bot ---");
   console.log("press ctrl+C to exit");
 

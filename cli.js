@@ -1,5 +1,7 @@
 const readline = require('readline');
 
+const { displayImage } = require('./helpers');
+
 async function askQuestion() {
   console.log();
   const rl = readline.createInterface({
