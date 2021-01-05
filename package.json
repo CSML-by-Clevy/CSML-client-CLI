@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "asciify-image": "^0.1.5",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bluebird": "^3.7.2",
     "commander": "^4.1.1",
     "dotenv": "^8.2.0",
