@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 require('dotenv').config();
-global.Promise = require('bluebird');
+const bluebird = require('bluebird');
 
 const path = require('path');
 const uuidv4 = require('uuid/v4');
@@ -30,7 +30,7 @@ let inputChoices = [];
 
 const continueConv = async (input) => {
   const conv = await api.getConv(input)
-  await Promise.each(conv.messages, async message => {
+  await bluebird.each(conv.messages, async message => {
     inputChoices = await cli.displayMessage(message, inputChoices);
   });
   if (conv.conversation_end) {
